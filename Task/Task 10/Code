@@ -1,0 +1,120 @@
+Hotel Reservation System using JavaScript Dialog Boxes
+
+HotelReservation.jsx
+
+import React from "react";
+
+function HotelReservation() {
+  const handleReservation = () => {
+    // Prompt for user name
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Reservation cancelled. Name is required.");
+      return;
+    }
+
+    // Prompt for number of guests
+    const guests = prompt("Enter number of guests:");
+    if (!guests || isNaN(guests) || guests <= 0) {
+      alert("Invalid number of guests. Reservation cancelled.");
+      return;
+    }
+
+    // Prompt for number of nights
+    const nights = prompt("Enter number of nights:");
+    if (!nights || isNaN(nights) || nights <= 0) {
+      alert("Invalid number of nights. Reservation cancelled.");
+      return;
+    }
+
+    // Prompt for room type
+    const roomTypeInput = prompt(
+      "Select room type:\n1. Single Room (₹2000 per night)\n2. Double Room (₹3500 per night)\n3. Suite (₹5000 per night)\nEnter 1, 2, or 3:"
+    );
+
+    let roomType, roomPrice;
+    switch (roomTypeInput) {
+      case "1":
+        roomType = "Single Room";
+        roomPrice = 2000;
+        break;
+      case "2":
+        roomType = "Double Room";
+        roomPrice = 3500;
+        break;
+      case "3":
+        roomType = "Suite";
+        roomPrice = 5000;
+        break;
+      default:
+        alert("Invalid room type. Reservation cancelled.");
+        return;
+    }
+
+    const totalPrice = roomPrice * nights;
+
+    // Confirmation dialog
+    const confirmReservation = window.confirm(
+      `Please confirm your reservation:\n\n` +
+      `Name: ${name}\n` +
+      `Guests: ${guests}\n` +
+      `Nights: ${nights}\n` +
+      `Room Type: ${roomType}\n` +
+      `Total Price: ₹${totalPrice}`
+    );
+
+    if (confirmReservation) {
+      alert(
+        `✅ Reservation Successful!\n\nThank you, ${name}.\nYour ${roomType} for ${nights} night(s) is confirmed.`
+      );
+    } else {
+      alert("❌ Reservation cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2>🏨 Hotel Reservation System</h2>
+      <button
+        onClick={handleReservation}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: "pointer",
+          marginTop: "20px",
+        }}
+      >
+        Reserve Room
+      </button>
+    </div>
+  );
+}
+
+export default HotelReservation;
+
+App.jsx:
+import React from "react";
+import HotelReservation from "./HotelReservation";
+
+function App() {
+  return (
+    <div>
+      <HotelReservation />
+    </div>
+  );
+}
+
+export default App;
+import React from "react";
+import HotelReservation from "./HotelReservation";
+
+function App() {
+  return (
+    <div>
+      <HotelReservation />
+    </div>
+  );
+}
+
+export default App;
+
