@@ -1,0 +1,74 @@
+Simulate an attendance tracker interface that marks students present or absent dynamically.
+
+AttendanceTracker.jsx
+
+import React, { useState } from "react";
+
+function AttendanceTracker() {
+  const [students, setStudents] = useState([
+    { id: 1, name: "Alice", status: "Absent" },
+    { id: 2, name: "Bob", status: "Absent" },
+    { id: 3, name: "Charlie", status: "Absent" },
+    { id: 4, name: "Diana", status: "Absent" },
+  ]);
+
+  const toggleAttendance = (id) => {
+    const updatedStudents = students.map((student) =>
+      student.id === id
+        ? {
+            ...student,
+            status: student.status === "Present" ? "Absent" : "Present",
+          }
+        : student
+    );
+
+    setStudents(updatedStudents);
+  };
+
+  const presentCount = students.filter(
+    (student) => student.status === "Present"
+  ).length;
+
+  const absentCount = students.length - presentCount;
+
+  return (
+    <div style={{ maxWidth: "500px", margin: "auto" }}>
+      <h2>📋 Attendance Tracker</h2>
+
+      <p>
+        ✅ Present: {presentCount} | ❌ Absent: {absentCount}
+      </p>
+
+      <ul style={{ listStyle: "none", padding: 0 }}>
+        {students.map((student) => (
+          <li
+            key={student.id}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "10px",
+              padding: "10px",
+              border: "1px solid #ccc",
+            }}
+          >
+            <span>{student.name}</span>
+            <button onClick={() => toggleAttendance(student.id)}>
+              {student.status}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default AttendanceTracker;
+
+App.jsx:
+import AttendanceTracker from "./AttendanceTracker";
+
+function App() {
+  return <AttendanceTracker />;
+}
+
+export default App;
