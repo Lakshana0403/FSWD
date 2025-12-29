@@ -1,0 +1,66 @@
+import React, { useState } from "react";
+
+function PollingApp() {
+  const [question] = useState("Which topic should we revise today?");
+  const [options, setOptions] = useState([
+    { text: "React Basics", votes: 0 },
+    { text: "State & Props", votes: 0 },
+    { text: "Hooks", votes: 0 },
+    { text: "Routing", votes: 0 },
+  ]);
+
+  const [hasVoted, setHasVoted] = useState(false);
+
+  const handleVote = (index) => {
+    if (hasVoted) return;
+
+    const updatedOptions = options.map((opt, i) =>
+      i === index ? { ...opt, votes: opt.votes + 1 } : opt
+    );
+
+    setOptions(updatedOptions);
+    setHasVoted(true);
+  };
+
+  const totalVotes = options.reduce((sum, opt) => sum + opt.votes, 0);
+
+  return (
+    <div style={{ maxWidth: "500px", margin: "auto", textAlign: "center" }}>
+      <h2>📊 Classroom Poll</h2>
+      <h3>{question}</h3>
+
+      {options.map((option, index) => (
+        <div key={index} style={{ margin: "10px 0" }}>
+          <button
+            onClick={() => handleVote(index)}
+            disabled={hasVoted}
+            style={{ padding: "10px", width: "100%" }}
+          >
+            {option.text}
+          </button>
+
+          {totalVotes > 0 && (
+            <p>
+              Votes: {option.votes} (
+              {((option.votes / totalVotes) * 100).toFixed(1)}%)
+            </p>
+          )}
+        </div>
+      ))}
+
+      <p>Total Votes: {totalVotes}</p>
+      {hasVoted && <p>✅ Thank you for voting!</p>}
+    </div>
+  );
+}
+
+export default PollingApp;
+
+App.jsx:
+import PollingApp from "./PollingApp";
+
+function App() {
+  return <PollingApp />;
+}
+
+export default App;
