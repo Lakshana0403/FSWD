@@ -1,0 +1,84 @@
+Flight Ticket Booking using JavaScript Dialog Boxes. (Alerts, Confirmations, and User Input (Prompt) Dialogs).
+
+flightBooking.html:
+import React from "react";
+
+function FlightBooking() {
+  const pricePerTicket = 5000;
+
+  const handleBooking = () => {
+    // Prompt for user name
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Booking cancelled. Name is required.");
+      return;
+    }
+
+    // Prompt for destination
+    const destination = prompt("Enter destination:");
+    if (!destination) {
+      alert("Booking cancelled. Destination is required.");
+      return;
+    }
+
+    // Prompt for number of tickets
+    const tickets = prompt("Enter number of tickets:");
+    if (!tickets || isNaN(tickets) || tickets <= 0) {
+      alert("Invalid number of tickets. Booking cancelled.");
+      return;
+    }
+
+    const totalPrice = tickets * pricePerTicket;
+
+    // Confirmation dialog
+    const confirmBooking = window.confirm(
+      `Please confirm your booking:\n\n` +
+      `Name: ${name}\n` +
+      `Destination: ${destination}\n` +
+      `Tickets: ${tickets}\n` +
+      `Total Price: ₹${totalPrice}`
+    );
+
+    if (confirmBooking) {
+      alert(`✅ Booking Successful!\n\nThank you, ${name}. Your flight to ${destination} is confirmed.`);
+    } else {
+      alert("❌ Booking cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h2>✈️ Flight Ticket Booking</h2>
+      <button
+        onClick={handleBooking}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: "pointer",
+          marginTop: "20px",
+        }}
+      >
+        Book Flight
+      </button>
+    </div>
+  );
+}
+
+export default FlightBooking;
+
+
+App.jsx:
+import React from "react";
+import FlightBooking from "./FlightBooking";
+
+function App() {
+  return (
+    <div>
+      <FlightBooking />
+    </div>
+  );
+}
+
+export default App;
+
+
