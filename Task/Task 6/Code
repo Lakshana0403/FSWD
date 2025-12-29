@@ -1,0 +1,83 @@
+ Implement a simple course enrollment form that updates the enrolled course list in real time.
+
+CourseEnrollment.jsx:
+import React, { useState } from "react";
+
+function CourseEnrollment() {
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+
+  const courses = [
+    "React Basics",
+    "JavaScript Fundamentals",
+    "HTML & CSS",
+    "Data Structures",
+    "Web Development",
+  ];
+
+  const handleEnroll = (e) => {
+    e.preventDefault();
+
+    if (!selectedCourse) {
+      alert("Please select a course");
+      return;
+    }
+
+    if (enrolledCourses.includes(selectedCourse)) {
+      alert("You are already enrolled in this course");
+      return;
+    }
+
+    setEnrolledCourses([...enrolledCourses, selectedCourse]);
+    setSelectedCourse("");
+  };
+
+  return (
+    <div style={{ maxWidth: "450px", margin: "auto" }}>
+      <h2>📚 Course Enrollment</h2>
+
+      <form onSubmit={handleEnroll}>
+        <select
+          value={selectedCourse}
+          onChange={(e) => setSelectedCourse(e.target.value)}
+        >
+          <option value="">Select a course</option>
+          {courses.map((course, index) => (
+            <option key={index} value={course}>
+              {course}
+            </option>
+          ))}
+        </select>
+
+        <br /><br />
+
+        <button type="submit">Enroll</button>
+      </form>
+
+      <hr />
+
+      <h3>✅ Enrolled Courses</h3>
+
+      {enrolledCourses.length === 0 ? (
+        <p>No courses enrolled yet.</p>
+      ) : (
+        <ul>
+          {enrolledCourses.map((course, index) => (
+            <li key={index}>{course}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default CourseEnrollment;
+
+App.jsx:
+import CourseEnrollment from "./CourseEnrollment";
+
+function App() {
+  return <CourseEnrollment />;
+}
+
+export default App;
